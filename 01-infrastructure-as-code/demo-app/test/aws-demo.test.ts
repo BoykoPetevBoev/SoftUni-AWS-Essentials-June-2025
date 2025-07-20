@@ -14,4 +14,6 @@ test('SQS Queue and SNS Topic Created', () => {
     VisibilityTimeout: 300
   });
   template.resourceCountIs('AWS::SNS::Topic', 1);
+
+  expect(template.toJSON()).toMatchSnapshot();
 });

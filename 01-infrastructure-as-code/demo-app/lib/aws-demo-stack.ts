@@ -12,8 +12,17 @@ export class AwsDemoStack extends Stack {
       visibilityTimeout: Duration.seconds(300)
     });
 
-    const topic = new sns.Topic(this, 'AwsDemoTopic');
+    // SNS topic for success notifications
+    const successTopic = new sns.Topic(this, 'SuccessTopic', {
+      displayName: 'Success Notifications Topic'
+    });
 
-    topic.addSubscription(new subs.SqsSubscription(queue));
+    // SNS topic for error notifications
+    const errorTopic = new sns.Topic(this, 'ErrorTopic', {
+      displayName: 'Error Notifications Topic'
+    });
+
+    successTopic.addSubscription(new subs.SqsSubscription(queue));
+    errorTopic.addSubscription(new subs.SqsSubscription(queue));
   }
 }

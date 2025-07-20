@@ -17,6 +17,7 @@ This repository contains coursework and exercises for the SoftUni AWS Essentials
 * `aws s3 ls` – List S3 buckets
 * `aws ec2 describe-instances` – List EC2 instances
 * `aws cloudformation list-stacks` – List CloudFormation stacks
+* `aws sts get-caller-identity` – Show details about the current AWS identity (useful for verifying credentials)
 
 ## AWS CDK Commands
 
@@ -33,7 +34,7 @@ This repository contains coursework and exercises for the SoftUni AWS Essentials
 ### Stack Management
 - `cdk list` – List all stacks in your CDK app
 - `cdk diff` – Compare your local stack with the deployed stack and show differences
-- `cdk deploy` – Deploy your stack(s) to AWS
+- `cdk deploy` – Deploy your stack(s) to AWS10
 - `cdk destroy` – Delete the deployed stack(s) from AWS
 
 ### Diagnostics & Utilities
