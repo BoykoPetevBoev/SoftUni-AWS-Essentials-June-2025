@@ -1,0 +1,31 @@
+new Deploy CDK softuni project
+
+on:
+  push:
+
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependancies
+        run: npm install && npm install -g aws-cdk
+
+      - name: Configure AWS Credentials
+        with: 
+          aws-access-key-id: ${{ secrets.AWS_CLI_ACCESS_KEY}}
+          aws-access-access-key: ${{ secrets.AWS_CLI_ACCESS_SECRET}}
+          aws-region: eu-central-1
+
+      - name: Synthesize CloutFormation Template
+        run: cdk synth
+
+      - name: Deploy CDK Stack
+        run cdk deploy --require-approval never
