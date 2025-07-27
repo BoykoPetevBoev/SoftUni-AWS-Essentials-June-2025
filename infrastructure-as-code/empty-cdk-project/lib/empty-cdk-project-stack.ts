@@ -24,21 +24,21 @@ export class EmptyCdkProjectStack extends cdk.Stack {
 
     const softUniFunction = new lambda.Function(this, 'SoftUniFunction', {
       runtime: lambda.Runtime.NODEJS_20_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromAsset(`${__dirname}/../src/one.ts`),
+      handler: 'one.handler',
+      code: lambda.Code.fromAsset(`${__dirname}/../src`),
     });
-    
+
 
     const environentProps = {
       errorTipicArn: errorTopic.topicArn,
       bucketName: 'softuni-bucket',
     }
 
-    const softUniFunctionOne= new BaseFunctions(this, 'one', {
+    const softUniFunctionOne = new BaseFunctions(this, 'one', {
       environment: environentProps,
     });
 
-    const softUniFunctionTwo= new BaseFunctions(this, 'two', {
+    const softUniFunctionTwo = new BaseFunctions(this, 'two', {
       environment: environentProps,
     });
 
