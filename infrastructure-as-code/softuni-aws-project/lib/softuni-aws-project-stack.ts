@@ -47,7 +47,7 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
     );
 
     storageNotificationTopic.addSubscription(
-      new subs.EmailSubscription('fake-email@example.com')
+      new subs.EmailSubscription('boykopetevboev@gmail.com')
     );
 
 
