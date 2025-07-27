@@ -72,9 +72,9 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
       projectionType: dynamodb.ProjectionType.ALL,
     });
 
-    const fillTableFunction = new NodejsFunction(this, "FillTable", {
+    const fillTableFunction = new NodejsFunction(this, "FillTableFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
-      entry: __dirname + '../src/fillTable.ts',
+      entry: __dirname + '/../src/fillTable.ts',
       handler: "handler",
       environment: {
         TABLE_NAME: nraAuditTable.tableName,
@@ -84,9 +84,9 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
     nraAuditTable.grantWriteData(fillTableFunction)
     storageNotificationTopic.grantPublish(fillTableFunction)
     
-    const getOrderFunction = new NodejsFunction(this, "FillTable", {
+    const getOrderFunction = new NodejsFunction(this, "GetOrderFunction", {
       runtime: lambda.Runtime.NODEJS_20_X,
-      entry: __dirname + '../src/getOrder.ts',
+      entry: __dirname + '/../src/getOrder.ts',
       handler: "handler",
       environment: {
         TABLE_NAME: nraAuditTable.tableName,
