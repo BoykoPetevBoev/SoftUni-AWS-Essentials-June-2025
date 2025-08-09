@@ -17,7 +17,7 @@ jobs:
 
       - name: Install dependancies
         run: npm install && npm install -g aws-cdk
-        working-directory: softuni-aws-project
+        working-directory: exam-preparation
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
@@ -28,8 +28,8 @@ jobs:
 
       - name: Synthesize CloutFormation Template
         run: cdk synth
-        working-directory: softuni-aws-project
+        working-directory: exam-preparation
 
       - name: Deploy CDK Stack
         run: cdk deploy --require-approval never
-        working-directory: softuni-aws-project
+        working-directory: exam-preparation

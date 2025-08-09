@@ -57,7 +57,7 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
         type: dynamodb.AttributeType.STRING 
       },
       sortKey: { 
-        name: 'SK', 
+        name: 'SK',
         type: dynamodb.AttributeType.STRING 
       },
       removalPolicy: cdk.RemovalPolicy.DESTROY,

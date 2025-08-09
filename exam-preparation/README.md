@@ -34,6 +34,40 @@ Add instructions for Boyko on how to test the functionalities before publishing 
 
 in the eu-central-1 region.
 
+# Resources
+
+- API Gateway
+    - Resource
+    - Method
+- Lambda-2
+- SNS
+    - Topic
+    - Subscription
+- S3 bucket
+- DynamoDB Table + Index
+- EventBridge Rule
+
+# Packages
+
+- npm i esbuild
+- npm i @types/aws-lambda
+- npm i uuid
+- npm i aws-sdk
+- npm i @aws-sdk/client-sns
+- npm i @aws-sdk/client-dynamodb
+- npm i @aws-sdk/client-scheduler
+
+# Const estimation
+- Region: us-central-1
+- API Gateway:
+    - 3 * $1.20 = ~$3.60
+- Lambda
+    - 128 (...) ~750ms = 0.75s
+- Amazon S3
+    - 3M * 2MB = 6TB
+- ...
+
+
 ## Useful commands
 
 * `npm run build`   compile typescript to js
