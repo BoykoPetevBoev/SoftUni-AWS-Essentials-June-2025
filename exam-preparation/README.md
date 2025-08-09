@@ -47,6 +47,11 @@ in the eu-central-1 region.
 - DynamoDB Table + Index
 - EventBridge Rule
 
+
+# Architecture Diagram
+
+![Architecture Diagram](infrastructure-composer-template.yaml.png)
+
 # Packages
 
 - npm i esbuild
