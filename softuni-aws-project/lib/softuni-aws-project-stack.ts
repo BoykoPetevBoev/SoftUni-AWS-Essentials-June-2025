@@ -47,7 +47,7 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
     );
 
     storageNotificationTopic.addSubscription(
-      new subs.EmailSubscription('fake-email@example.com')
+      new subs.EmailSubscription('boykopetevboev@gmail.com')
     );
 
 
@@ -57,7 +57,7 @@ export class SoftuniAwsProjectStack extends cdk.Stack {
         type: dynamodb.AttributeType.STRING 
       },
       sortKey: { 
-        name: 'SK', 
+        name: 'SK',
         type: dynamodb.AttributeType.STRING 
       },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
