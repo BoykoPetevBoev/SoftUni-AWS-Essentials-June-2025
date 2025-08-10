@@ -1,9 +1,10 @@
 import * as cdk from 'aws-cdk-lib';
 import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
-import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
+import { AttributeType, BillingMode, StreamViewType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { DynamoEventSource, StartingPosition } from 'aws-cdk-lib/aws-lambda-event-sources';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 import { Construct } from 'constructs';
@@ -33,12 +34,15 @@ export class RegularExamStack extends cdk.Stack {
       },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+      timeToLiveAttribute: 'TTL',
+      stream: StreamViewType.NEW_AND_OLD_IMAGES,
     });
+
     table.addGlobalSecondaryIndex({
-      indexName: 'GSI',
+      indexName: 'TTL-Index',
       partitionKey: {
-        name: 'GSI-PK',
-        type: AttributeType.STRING
+        name: 'TTL',
+        type: AttributeType.NUMBER
       },
     });
 
@@ -49,6 +53,7 @@ export class RegularExamStack extends cdk.Stack {
       entry: path.join(__dirname, '../src/regularExamHandler.ts'),
       environment: {
         TOPIC_ARN: topic.topicArn,
+        TABLE_NAME: table.tableName,
       },
     });
     lambdaFunction.addPermission('InvokeLambdaFunction', {
@@ -57,7 +62,28 @@ export class RegularExamStack extends cdk.Stack {
       sourceArn: `arn:aws:events:${this.region}:${this.account}:rule/*`,
     });
     topic.grantPublish(lambdaFunction);
+    table.grantWriteData(lambdaFunction);
 
+    // Deletion Handler Lambda Function
+    const deletionHandler = new NodejsFunction(this, 'DeletionHandlerFunction', {
+      handler: 'handler',
+      runtime: Runtime.NODEJS_20_X,
+      entry: path.join(__dirname, '../src/deletionHandler.ts'),
+      environment: {
+        TOPIC_ARN: topic.topicArn,
+      },
+    });
+    
+    // Grant SNS publish permissions to deletion handler
+    topic.grantPublish(deletionHandler);
+    
+    // Grant DynamoDB Stream read permissions to deletion handler
+    table.grantStreamReadData(deletionHandler);
+    
+    // Create DynamoDB Stream trigger
+    deletionHandler.addEventSource(new DynamoEventSource(table, {
+      startingPosition: StartingPosition.LATEST,
+    }));
 
     // API Gateway
     const api = new RestApi(this, 'RegularExamApi');
