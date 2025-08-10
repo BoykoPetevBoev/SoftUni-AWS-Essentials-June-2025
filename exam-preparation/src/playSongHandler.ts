@@ -6,7 +6,6 @@ import { DynamoDBClient, PutItemCommand, UpdateItemCommand } from '@aws-sdk/clie
 
 
 const ddbClient = new DynamoDBClient();
-
 const snsClient = new SNSClient();
 
 export const handler = async (event: EventBridgeEvent<string, ArtistTitle>) => {
