@@ -2,6 +2,39 @@
 
 This repository contains coursework and exercises for the SoftUni AWS Essentials course (June 2025 edition).
 
+# Retake Exam
+
+## GitHub Repo:
+https://github.com/BoykoPetevBoev/SoftUni-AWS-Essentials-June-2025
+
+### 🚀 Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/SoftUni-AWS-Essentials-June-2025.git
+   ```
+
+2. **Navigate to the retake-exam folder:**
+   ```bash
+   cd SoftUni-AWS-Essentials-June-2025/retake-exam
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **Deploy the stack:**
+   ```bash
+   cdk deploy
+   ```
+
+5. **Access the website:**
+   - The S3 website URL will be displayed after deployment
+   - Use the "Save cat" button to save favorite cats
+   - Check your email for SNS notifications
+
+
 ## Useful commands
 
 * `npm run build`   compile typescript to js
