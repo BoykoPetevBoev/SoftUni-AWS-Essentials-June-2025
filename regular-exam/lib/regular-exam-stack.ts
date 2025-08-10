@@ -4,8 +4,6 @@ import { AttributeType, BillingMode, StreamViewType, Table } from 'aws-cdk-lib/a
 import { ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import { DynamoEventSource, StartingPosition } from 'aws-cdk-lib/aws-lambda-event-sources';
-import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { Subscription, SubscriptionProtocol, Topic } from 'aws-cdk-lib/aws-sns';
 import { Construct } from 'constructs';
 import * as path from 'path';
@@ -77,13 +75,6 @@ export class RegularExamStack extends cdk.Stack {
     // Grant SNS publish permissions to deletion handler
     topic.grantPublish(deletionHandler);
     
-    // Grant DynamoDB Stream read permissions to deletion handler
-    table.grantStreamReadData(deletionHandler);
-    
-    // Create DynamoDB Stream trigger
-    deletionHandler.addEventSource(new DynamoEventSource(table, {
-      startingPosition: StartingPosition.LATEST,
-    }));
 
     // API Gateway
     const api = new RestApi(this, 'RegularExamApi');
